@@ -1,0 +1,9 @@
+28.07.2015 13:02:43 adding contact name:Petrov, phone number:+78945612323, e-mail:petr_ov@gmail.com
+28.07.2015 13:03:40 adding contact name:Morozov Nikolay, phone number:+78456123652, e-mail:mor_zov@gmail.com
+28.07.2015 13:03:55 delete contact name:Petrov, phone number:+78945612323, e-mail:petr_ov@gmail.com
+28.07.2015 13:04:46 adding contact name:Petrov Ivan, phone number:+78456932156, e-mail:petrov_ii@gmail.com
+28.07.2015 13:05:25 adding contact name:Valentinov Egor, phone number:+784569312123, e-mail:egor_val@gmail.com
+28.07.2015 13:05:49  editing field: phone; old value: +78456932156, new value:+78457732156
+28.07.2015 13:06:30 adding contact name:Kostyaev Mikhail, phone number:+78459631212, e-mail:email
+28.07.2015 13:06:49  editing field: email; old value: email, new value:kostyaev@gmail.com
+28.07.2015 13:07:26 adding contact name:Krolchenko Genadiy, phone number:+78459631236, e-mail:krolch_gen@gmail.com
