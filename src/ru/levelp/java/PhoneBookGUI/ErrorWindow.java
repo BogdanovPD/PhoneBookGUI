@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ErrorWindow {
+public class ErrorWindow implements Window{
 
     String text;
     private JFrame frame = new JFrame("Error");

@@ -13,12 +13,14 @@ public class GUI {
     private JPanel centerPanel = new JPanel();
     private JPanel rightPanel = new JPanel();
     private JButton addButton = new JButton("Add");
-    private JButton editButton = new JButton("Edit");
+    private JButton editButton = new JButton("Show\\Edit");
     private JButton showAllButton = new JButton("Show all");
-    private JButton showByNameButton = new JButton("Show by name");
+    private JButton showByNameButton = new JButton("Select by name");
     private JButton deleteButton = new JButton("Delete");
     private GUI gui = this;
     private PhoneBook phonebook;
+    private DefaultListModel listModel = new DefaultListModel();
+    private MyMouseListener MML = new MyMouseListener(gui);
 
     JScrollPane scroll;
 
@@ -30,18 +32,16 @@ public class GUI {
         catch (IOException e){
         }
 
-        String[] data = new String[getPhonebook().size];
-        for (int i = 0; i < getPhonebook().size; i++) {
-            data[i] = getPhonebook().phone_book.get(i).getName();
-        }
+        showAll();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, 300, 180);
-        list = new JList(data);
+        setList(new JList(getListModel()));
+        list.addMouseListener(MML);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        list.setLayoutOrientation(JList.VERTICAL);
-        list.setVisibleRowCount(0);
-        scroll = new JScrollPane(list);
+        getList().setLayoutOrientation(JList.VERTICAL);
+        getList().setVisibleRowCount(0);
+        scroll = new JScrollPane(getList());
         scroll.setPreferredSize(new Dimension(100, 100));
 
         centerPanel.add(scroll);
@@ -65,21 +65,39 @@ public class GUI {
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OtherActionsWindow(gui,"Edit").build();
+                if (list.getSelectedValue()!=null)
+                    new EditWindow(gui, (String)list.getSelectedValue()).build();
+                else
+                    new ErrorWindow("Select record!").build();
+
             }
         });
 
         showByNameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OtherActionsWindow(gui,"Show").build();
+                if (list.getSelectedValue()!=null)
+                    new OtherActionsWindow(gui,"Show", (String)(list.getSelectedValue())).build();
+                else
+                    new OtherActionsWindow(gui,"Show").build();
             }
         });
 
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OtherActionsWindow(gui,"Delete").build();
+                if (list.getSelectedValue()!=null)
+                    new OtherActionsWindow(gui,"Delete", (String)(list.getSelectedValue())).build();
+                else
+                    new OtherActionsWindow(gui,"Delete").build();
+            }
+        });
+
+        showAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listModel.removeAllElements();
+                showAll();
             }
         });
 
@@ -96,4 +114,27 @@ public class GUI {
     public void setPhonebook(PhoneBook phonebook) {
         this.phonebook = phonebook;
     }
+
+    public JList getList() {
+        return list;
+    }
+
+    public void setList(JList list) {
+        this.list = list;
+    }
+
+    public DefaultListModel getListModel() {
+        return listModel;
+    }
+
+    public void setListModel(DefaultListModel listModel) {
+        this.listModel = listModel;
+    }
+
+    public void showAll(){
+        for (int i = 0; i < getPhonebook().size; i++) {
+            getListModel().addElement(getPhonebook().phone_book.get(i).getName());
+        }
+    }
+
 }

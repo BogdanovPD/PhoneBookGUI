@@ -93,23 +93,31 @@ public class PhoneBook {
                     writeToLog(oldValue, newValue);}
                 catch (FileNotFoundException e){
                     System.out.println("File not found");}
+                try{
+                    writeToFile();}
+                catch (FileNotFoundException e){
+                    System.out.println("File not found");}
+                return true;
             }
-            try{
-                writeToFile();}
-            catch (FileNotFoundException e){
-                System.out.println("File not found");}
-            return true;
         }
         System.out.println("Contact doesn't exist or contact list is empty");
         return false;
     }
 
-    private Contact findByName(String name){
+    public Contact findByName(String name){
         for (int i=0;i<size;i++){
             if (phone_book.get(i).getName().equals(name))
                 return phone_book.get(i);
         }
         return null;
+    }
+
+    public int getIndex(String name){
+        for (int i=0;i<size;i++){
+            if (phone_book.get(i).getName().equals(name))
+                return i;
+        }
+        return -1;
     }
 
     public void writeToFile() throws FileNotFoundException {
@@ -150,7 +158,7 @@ public class PhoneBook {
 
     public void writeToLog(String actionType, Contact contact) throws FileNotFoundException {
         Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         PrintWriter writer = new PrintWriter(new FileOutputStream("log.txt",true));
         writer.println(dateFormat.format(currentDate) + " " + actionType + " contact name:" + contact.getName() + ", phone number:" + contact.getPhone_number() + ", e-mail:" + contact.getEmail());
         writer.flush();
@@ -159,7 +167,7 @@ public class PhoneBook {
 
     public void writeToLog() throws FileNotFoundException {
         Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         PrintWriter writer = new PrintWriter(new FileOutputStream("log.txt",true));
         writer.println(dateFormat.format(currentDate) + " showing all contacts");
         writer.flush();
@@ -168,7 +176,7 @@ public class PhoneBook {
 
     public void writeToLog(String oldValue, String newValue) throws FileNotFoundException {
         Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         PrintWriter writer = new PrintWriter(new FileOutputStream("log.txt",true));
         writer.println(dateFormat.format(currentDate) + " " + oldValue + ", new value:" + newValue);
         writer.flush();
